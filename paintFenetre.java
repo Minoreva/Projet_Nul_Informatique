@@ -21,7 +21,7 @@ public class paintFenetre extends JFrame{
 
         // dimensionnement de la fenêtre
         setSize(600, 600);
-        setLocation(300,200);
+        setLocation(300, 200);
 
         // quitter le programme lorsqu'on ferme la fenêtre
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,7 +30,13 @@ public class paintFenetre extends JFrame{
         JPanel drawingPanel = new paint();
         setContentPane(drawingPanel);
 
+        //todo : Faire un tableau qui créera a chaque boucle le lapin et la citrouille pour les faire ses déplacer
+        //repaint();
+
+
+
         setVisible(true);
     }
+
 }
 

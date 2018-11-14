@@ -1,3 +1,10 @@
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+
 public abstract class Master extends main{
     public int x;
     public int y;
@@ -9,16 +16,5 @@ public abstract class Master extends main{
         this.y = y;
         this.poids = poids;
     }
-
-    public void apparaitre(){
-
-
-
-
-
-    }
-
-
-
 
 }
