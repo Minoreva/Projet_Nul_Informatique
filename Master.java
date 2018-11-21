@@ -17,4 +17,11 @@ public abstract class Master extends main{
         this.poids = poids;
     }
 
+    public void déplacer(){
+
+    }
+
+    public int getX(){
+        return this.x;
+    }
 }

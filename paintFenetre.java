@@ -19,6 +19,8 @@ public class paintFenetre extends JFrame{
         setTitle("essai");
         setLayout(null);
 
+        //tableau();
+
         // dimensionnement de la fenêtre
         setSize(600, 600);
         setLocation(300, 200);
@@ -37,6 +39,9 @@ public class paintFenetre extends JFrame{
 
         setVisible(true);
     }
+
+
+
 
 }
 
