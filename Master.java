@@ -5,11 +5,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
-public class Master extends main {
+public class Master {
     public int x;
     public int y;
     public double poids;
     public int vie;
+    boolean isDeplaced;
 
 
     public Master(int x, int y, double poids,int vie) {
@@ -17,16 +18,18 @@ public class Master extends main {
         this.y = y;
         this.poids = poids;
         this.vie = vie;
+        this.isDeplaced = false;
     }
 
 
 
-    public boolean estVivant(){
+/*    public boolean estVivant(){
         if (this.getVie()!=0)
             return false;
         else
             return true;
     }
+    */
 
 
     public int getX() {
@@ -43,16 +46,16 @@ public class Master extends main {
 
     }
 
-    public void SpawnVie(){
-        int chance = (int)(Math.random()*(100));
-        if(chance > 95)
+    public void SpawnVie() {
+        int chance = (int) (Math.random() * (100));
+        if (chance > 90)
             this.vie = 1;
-        else if (chance < 5)
+        else if (chance < 10)
             this.vie = 2;
     }
 
     public int getVie(){
-        return this.vie;
+            return this.vie;
     }
 
     public void setVie(int vie){
@@ -60,62 +63,54 @@ public class Master extends main {
     }
 
     public void déplacer(Master[][] tablo) {
-        for (int i = 0; i < tablo.length; i++) {
-            for (int k = 0; k < tablo.length; k++) {
-                if(this.getVie() > 0) {
-                    int déplacement = (int) (Math.random() * (8));
+        try {
+            if (this.getVie() == 1 && tablo[x][y] != null) {
+                int déplacement = (int) (Math.random() * (5));
+                //int déplacement = 1;
+                if ((déplacement == 1 && (x > 0 && y > 0)) && (tablo[x - 1][y - 1] == null)) {
+                    tablo[x - 1][y - 1] = tablo[x][y];
+                    tablo[x][y] = null;
+                    x = x - 1;
+                    y = y - 1;
+                }
+                if ((déplacement == 2 && (x > 0 && y < 50)) && (tablo[x - 1][y + 1] == null)) {
+                    tablo[x - 1][y + 1] = tablo[x][y];
+                    tablo[x][y] = null;
+                    x = x - 1;
+                    y = y + 1;
+                }
+                if ((déplacement == 3 && (x < 50 && y < 50)) && (tablo[x + 1][y + 1] == null)) {
+                    tablo[x + 1][y + 1] = tablo[x][y];
+                    tablo[x][y] = null;
+                    x = x + 1;
+                    y = y + 1;
+                }
+                if ((déplacement == 4 && (x < 50 && y > 0)) && (tablo[x + 1][y - 1] == null)) {
+                    tablo[x + 1][y - 1] = tablo[x][y];
+                    tablo[x][y] = null;
+                    x = x + 1;
+                    y = y - 1;
+                }
 
-                    if (déplacement == 1 && ((this.getX() > 0 && this.getY() > 0) && tablo[x-1][y-1].getVie()==0)) {
-                        if (this.getVie() == 1 ) {
-                            tablo[x - 1][y - 1].setVie(1);
-                            tablo[x][y].setVie(0);
-                        } else if (this.getVie() == 2) {
-                            tablo[x - 1][y - 1].setVie(2);
-                            tablo[x][y].setVie(0);
+                // tant qu'à faire, on mange pendant qu'on se déplace...
+                for(int i=-1;i<=1;i++){
+                    for(int k=-1;k<=1;k++){
+                        if (tablo[x+i][y+i] != null && tablo[x+i][y+i].getVie() == 2){
+                            tablo[x+i][y+i] = null;
+                            tablo[x+i][y+i] = new Master(x+i,y+i,0,1);
+
                         }
+
+
                     }
-                    if (déplacement == 2 && ((this.getX() < 4 && this.getY() > 0)&& tablo[x+1][y-1].getVie()==0)){
-                        if (this.getVie() == 1) {
-                            tablo[getX() + 1][getY() - 1].setVie(1);
-                            tablo[getX()][getY()].setVie(0);
-                        } else if (this.getVie() == 2) {
-                            tablo[getX() + 1][getY() - 1].setVie(2);
-                            tablo[getX()][getY()].setVie(0);
-                        }
-                    }
-                    if (déplacement == 3 && ((this.getX() > 0 && this.getY() < 4 )&& tablo[x-1][y+1].getVie()==0)) {
-                        if (this.getVie() == 1) {
-                            tablo[x - 1][y + 1].setVie(1);
-                            tablo[x][y].setVie(0);
-                        } else if (this.getVie() == 2) {
-                            tablo[x - 1][y + 1].setVie(2);
-                            tablo[x][y].setVie(0);
-                        }
-                    }
-                    if (déplacement == 4 && ((this.getX() < 4 && this.getY() < 4 )&& tablo[x+1][y+1].getVie()==0)) {
-                        if (this.getVie() == 1) {
-                            tablo[x + 1][y + 1].setVie(1);
-                            tablo[x][y].setVie(0);
-                        } else if (this.getVie() == 2) {
-                            tablo[x + 1][y + 1].setVie(2);
-                            tablo[x][y].setVie(0);
-                        }
-                    }
-
-
-
-
-
-
-
-
-
                 }
 
             }
-        }
+        } catch(ArrayIndexOutOfBoundsException f){
 
+        }
     }
+
 
 
 }

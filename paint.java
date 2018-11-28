@@ -22,13 +22,17 @@ public class paint extends JPanel{
 
         for (int i = 0; i < tablo.length; i++) {
             for (int k = 0; k < tablo.length; k++) {
-                if(tablo[i][k].getVie() == 1) {
-                    //Création d'une citrouille aléatoirement
-                    g.setColor(Color.ORANGE);
-                    g.fillOval(25+(i*100),25+(k*100),50,50);
-                } else if (tablo[i][k].getVie() == 2){
-                    g.setColor(Color.RED);
-                    g.fillOval(25+(i*100),25+(k*100),50,50);
+                try {
+                    if (tablo[i][k].getVie() == 1 && tablo[i][k] != null) {
+                        //Création d'une citrouille aléatoirement
+                        g.setColor(Color.ORANGE);
+                        g.fillRect((i * 10),  (k * 10), 10, 10);
+                    } else if (tablo[i][k].getVie() == 2 && tablo[i][k] != null) {
+                        g.setColor(Color.RED);
+                        g.fillRect((i * 10),(k * 10), 10, 10);
+                    }
+                } catch(NullPointerException e) {
+
                 }
             }
         }
@@ -45,10 +49,8 @@ public class paint extends JPanel{
 
         // On dessine les colonnes et les lignes
         for (int i=0;i<(getWidth());i++) {
-            g.drawLine((100 * i), 0, (100*i), getHeight());
-            g.drawLine(0, (100*i), getWidth(), (100*i));
+            g.drawLine((10 * i), 0, (10*i), getHeight());
+            g.drawLine(0, (10*i), getWidth(), (10*i));
         }
     }
-
-
 }

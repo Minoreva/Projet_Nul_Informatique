@@ -30,42 +30,31 @@ public class paintFenetre extends JFrame{
         setTitle("essai");
         setLayout(null);
 
-        //tableau();
 
         // dimensionnement de la fenêtre
-        setSize(600, 600);
+        setSize(500, 500);
         setLocation(300, 200);
 
         // quitter le programme lorsqu'on ferme la fenêtre
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // On utilise un drawingPanel
 
 
-
-        Master tablo[][] = new Master[5][5];
+        Master tablo[][] = new Master[50][50];
         int chance=0;
 
         for (int i = 0; i < tablo.length; i++) {
             for (int k = 0; k < tablo.length; k++) {
-                tablo[i][k] = new Master(i,k,0,0);
-                tablo[i][k].SpawnVie();
+                    tablo[i][k] = new Master(i,k,0,0);
+                    tablo[i][k].SpawnVie();
+                    if(tablo[i][k].getVie() == 0){
+                        tablo[i][k] = null;
+
+                    }
+
             }
         }
 
-
-        JPanel boutonPane = new JPanel();
-        JButton bouton = new JButton("Bouger");
-        bouton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent event){
-                for (int i = 0; i < tablo.length; i++) {
-                    for (int k = 0; k < tablo.length; k++) {
-                        tablo[i][k].déplacer(tablo);
-                        repaint();
-                    }
-                }
-            }
-        });
 
         Timer timer1;
         class ReactionTopTimer implements ActionListener {
@@ -74,23 +63,32 @@ public class paintFenetre extends JFrame{
                 ;
                 for (int i = 0; i < tablo.length; i++) {
                     for (int k = 0; k < tablo.length; k++) {
-                        tablo[i][k].déplacer(tablo);
-                        repaint();
+                        if (tablo[i][k] != null) {
+                            tablo[i][k].isDeplaced=false;
+                        }
                     }
                 }
 
+                for (int i = 0; i < tablo.length; i++)
+                    for (int k = 0; k < tablo.length; k++)
+                        if (tablo[i][k] != null) {
+                            if (tablo[i][k].isDeplaced == false) {
+                                tablo[i][k].isDeplaced = true;
+                                tablo[i][k].déplacer(tablo);
+                            }
+                        }
+                repaint();
             }
         }
-        timer1 = new Timer(500, new ReactionTopTimer());
+
+        timer1 = new Timer(100, new ReactionTopTimer());
 
 
 
 
         JPanel drawingPanel = new paint(tablo);
         setContentPane(drawingPanel);
-        boutonPane.add(bouton);
-        this.getContentPane().add(boutonPane, BorderLayout.NORTH);
-        //todo : Faire un tableau qui créera a chaque boucle le lapin et la citrouille pour les faire ses déplacer
+
         //repaint();
 
 
