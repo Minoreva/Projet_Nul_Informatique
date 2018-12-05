@@ -25,7 +25,7 @@ public class paint extends JPanel{
                 try {
                     if (tablo[i][k].getVie() == 1 && tablo[i][k] != null) {
                         //Création d'une citrouille aléatoirement
-                        g.setColor(Color.ORANGE);
+                        g.setColor(Color.orange);
                         g.fillRect((i * 10),  (k * 10), 10, 10);
                     } else if (tablo[i][k].getVie() == 2 && tablo[i][k] != null) {
                         g.setColor(Color.RED);
