@@ -33,9 +33,9 @@ int nbPotirons = 0;
 
 
 
-        Master tablo[][] = new Master[50][50];
+        Master tablo[][] = new Master[50][50]; // Arbitrairement je me contenterai d'un tableau 50*50 pour l'instant.
 
-        for (int i = 0; i < tablo.length; i++) {
+        for (int i = 0; i < tablo.length; i++) { //Boucle qui fabrique le premier jet du tableau
             for (int k = 0; k < tablo.length; k++) {
                 tablo[i][k] = new Master(i,k,0,0);
                 tablo[i][k].SpawnVie();
@@ -53,16 +53,25 @@ int nbPotirons = 0;
                 for (int i = 0; i < tablo.length; i++) {
                     for (int k = 0; k < tablo.length; k++) {
                         if (tablo[i][k] != null) {
-                            tablo[i][k].isDeplaced=false;
-                            if(tablo[i][k].getVie() == 1)
+                            tablo[i][k].isDeplaced = false;
+                            if (tablo[i][k].getVie() == 1)  //compte les lapins
                                 nbLapins++;
-                            if(tablo[i][k].getVie() == 2)
+                            if (tablo[i][k].getVie() == 2) //compte les potirons
                                 nbPotirons++;
+                        }
+                    } // On note master.vie == 1 => Lapin et master.vie == 2 => Potiron
+                }
+                for (int i = 0; i < tablo.length; i++) {
+                    for (int k = 0; k < tablo.length; k++) {
+                        if(tablo[i][k] == null){
+                            tablo[i][k] = new Master(i,k,0,0); // Génère la vie et le spawn de potirons.
+                            tablo[i][k].SpawnPot(nbLapins,nbPotirons);
+                            if(tablo[i][k].getVie() == 0) // vérifie si un potiron ou un lapin est né sur une case. Semble bug sur le spawn potiron
+                                tablo[i][k] = null;
                         }
                     }
                 }
-                System.out.println(nbLapins +"   "+nbPotirons);
-
+                System.out.println(nbLapins +"   "+nbPotirons); // message de debug
 
                 for (int i = 0; i < tablo.length; i++) {
                     for (int k = 0; k < tablo.length; k++) {
@@ -70,20 +79,12 @@ int nbPotirons = 0;
                             if (tablo[i][k].isDeplaced == false) {
                                 tablo[i][k].isDeplaced = true;
                                 tablo[i][k].tour++;
-                                tablo[i][k].MeurtreMortDetruire(tablo);
-                                tablo[i][k].déplacer(tablo);
+                                tablo[i][k].MeurtreMortDetruire(tablo); //tue les lapins dépassant 'x' tours
+                                if(tablo[i][k].inBounds())
+                                    tablo[i][k].Manger(tablo,nbLapins,nbPotirons); //scan + mange lapins
+                                if(tablo[i][k] != null && tablo[i][k].inBounds())
+                                    tablo[i][k].déplacer(tablo); // déplace lapin ; bug sur les bordures ?
                             }
-                        }
-                    }
-                }
-
-                for (int i = 0; i < tablo.length; i++) {
-                    for (int k = 0; k < tablo.length; k++) {
-                        if(tablo[i][k] == null){
-                            tablo[i][k] = new Master(i,k,0,0);
-                            tablo[i][k].SpawnPot(nbLapins,nbPotirons);
-                            if(tablo[i][k].getVie() == 0)
-                               tablo[i][k] = null;
                         }
                     }
                 }

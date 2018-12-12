@@ -22,17 +22,14 @@ public class paint extends JPanel{
 
         for (int i = 0; i < tablo.length; i++) {
             for (int k = 0; k < tablo.length; k++) {
-                try {
-                    if (tablo[i][k].getVie() == 1 && tablo[i][k] != null) {
-                        //Création d'une citrouille aléatoirement
+                if(tablo[i][k] != null) {
+                    if (tablo[i][k].getVie() == 1) {
                         g.setColor(Color.orange);
-                        g.fillRect((i * 10),  (k * 10), 10, 10);
-                    } else if (tablo[i][k].getVie() == 2 && tablo[i][k] != null) {
+                        g.fillRect((i * 10), (k * 10), 10, 10);
+                    } else if (tablo[i][k].getVie() == 2) {
                         g.setColor(Color.RED);
-                        g.fillRect((i * 10),(k * 10), 10, 10);
+                        g.fillRect((i * 10), (k * 10), 10, 10);
                     }
-                } catch(NullPointerException e) {
-
                 }
             }
         }
