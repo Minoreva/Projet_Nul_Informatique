@@ -29,7 +29,7 @@ public class paint extends JPanel{
                     } else if (tablo[i][k].getVie() == 2) {
                         g.setColor(Color.RED);
                         g.fillRect((i * 10), (k * 10), 10, 10);
-                    }
+                    }                    
                 }
             }
         }

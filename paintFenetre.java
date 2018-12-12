@@ -65,12 +65,27 @@ int nbPotirons = 0;
                     for (int k = 0; k < tablo.length; k++) {
                         if(tablo[i][k] == null){
                             tablo[i][k] = new Master(i,k,0,0); // Génère la vie et le spawn de potirons.
-                            tablo[i][k].SpawnPot(nbLapins,nbPotirons);
                             if(tablo[i][k].getVie() == 0) // vérifie si un potiron ou un lapin est né sur une case. Semble bug sur le spawn potiron
                                 tablo[i][k] = null;
                         }
                     }
                 }
+                
+                for(int i=0;i < ((3*nbLapins)/(nbPotirons+1)); i++){
+                int a = (int) (Math.random() * (50));
+                int b = (int) (Math.random() * (50));
+                if(tablo[a][b] == null)
+					tablo[a][b] = new Master(a,b,0,2); //Potiron
+				}
+				for(int i=0;i < ((nbPotirons)/(nbLapins+1)); i++){
+                int a = (int) (Math.random() * (50));
+                int b = (int) (Math.random() * (50));
+                if(tablo[a][b] == null)
+					tablo[a][b] = new Master(a,b,0,1); // Lapin
+				}
+				
+                
+                
                 System.out.println(nbLapins +"   "+nbPotirons); // message de debug
 
                 for (int i = 0; i < tablo.length; i++) {
@@ -80,8 +95,8 @@ int nbPotirons = 0;
                                 tablo[i][k].isDeplaced = true;
                                 tablo[i][k].tour++;
                                 tablo[i][k].MeurtreMortDetruire(tablo); //tue les lapins dépassant 'x' tours
-                                if(tablo[i][k].inBounds())
-                                    tablo[i][k].Manger(tablo,nbLapins,nbPotirons); //scan + mange lapins
+                                if(tablo[i][k].inBoundsmiam())
+                                  tablo[i][k].Manger(tablo,nbLapins,nbPotirons); //scan + mange lapins
                                 if(tablo[i][k] != null && tablo[i][k].inBounds())
                                     tablo[i][k].déplacer(tablo); // déplace lapin ; bug sur les bordures ?
                             }

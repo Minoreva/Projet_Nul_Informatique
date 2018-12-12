@@ -28,10 +28,10 @@ public class Master {
     }
 
     public void SpawnVie() {
-        int chance = (int) (Math.random() * (100));
-        if (chance > 95)
+        int chance = (int) (Math.random() * (101));
+        if (chance > 90)
             this.vie = 1;
-        else if (chance < 5)
+        else if (chance < 10)
             this.vie = 2;
     }
 
@@ -40,46 +40,46 @@ public class Master {
     }
 
     public void déplacer(Master[][] tablo) { // Les points en bordure et/ou entourés ne semblent plus bouger à partir d'un certain moment.
-        if (this.getVie() == 1 && tablo[x][y] != null) { //todo : les règles de locta voltera
+        if (tablo[x][y] != null) { //todo : les règles de locta voltera
             int déplacement = (int) (Math.random() * (5));
             //int déplacement = 1;
-            if (déplacement == 1 && tablo[x - 1][y - 1] == null){
-                tablo[x - 1][y - 1] = tablo[x][y];
-                tablo[x][y] = null;
-                x = x - 1;
-                y = y - 1;
+            if( x-1 > -1 && y-1 > -1){
+				if (déplacement == 1 && tablo[x - 1][y - 1] == null &&  x-1 > -1 && y-1 > -1){
+					tablo[x - 1][y - 1] = tablo[x][y];
+					tablo[x][y] = null;
+					x = x - 1;
+					y = y - 1;
+				}
             }
-            if (déplacement == 2 && tablo[x - 1][y + 1] == null) {
-                tablo[x - 1][y + 1] = tablo[x][y];
-                tablo[x][y] = null;
-                x = x - 1;
-                y = y + 1;
-            }
-            if (déplacement == 3 && tablo[x + 1][y + 1] == null){
-                tablo[x + 1][y + 1] = tablo[x][y];
-                tablo[x][y] = null;
-                x = x + 1;
-                y = y + 1;
-            }
-            if (déplacement == 4 && tablo[x + 1][y - 1] == null){
-                tablo[x + 1][y - 1] = tablo[x][y];
-                tablo[x][y] = null;
-                x = x + 1;
-                y = y - 1;
-            }
+            if( x-1 > -1 && y+1 < 50){
+				if (déplacement == 2 && tablo[x - 1][y + 1] == null) {
+					tablo[x - 1][y + 1] = tablo[x][y];
+					tablo[x][y] = null;
+					x = x - 1;
+					y = y + 1;
+				}
+			}
+            if( x+1 < 50 && y+1 < 50){				
+				if (déplacement == 3 && tablo[x + 1][y + 1] == null){
+					tablo[x + 1][y + 1] = tablo[x][y];
+					tablo[x][y] = null;
+					x = x + 1;
+					y = y + 1;
+				}
+			}
+            if( x+1 < 50 && y-1 > -1){            
+				if (déplacement == 4 && tablo[x + 1][y - 1] == null){
+					tablo[x + 1][y - 1] = tablo[x][y];
+					tablo[x][y] = null;
+					x = x + 1;
+					y = y - 1;
+				}
+			}
         }
     }
 
-    public void SpawnPot(int nbLap, int nbPot){
-        int chance = (int) (Math.random() * (100));
-        if (chance > 95 && (nbLap < 2*nbPot || nbLap < 60))
-            this.vie = 2;
-        if(chance > 98)
-            this.vie = 2;
-    }
-
     public void MeurtreMortDetruire(Master[][] tablo){
-        if ( tour == 275 )
+        if ( tour == 275 && this.vie != 3)
             tablo[x][y].setMort();
     }
 
@@ -88,7 +88,7 @@ public class Master {
             for(int k=-1;k<=1;k++){
                 if ((tablo[x+i][y+i] != null && tablo[x+i][y+i].getVie() == 2) && tablo[x][y].getVie()==1){
                     tablo[x+i][y+i] = null;
-                    if((int)(Math.random() * (100)) < 5)
+                    if((int)(Math.random() * (100)) < 50)
                         tablo[x+i][y+i] = new Master(x+i,y+i,0,1);
                 }
             }
@@ -97,7 +97,15 @@ public class Master {
 
     public boolean inBounds(){
         boolean inbounds = false;
-        if((x > 0 && x < 49) && ( y > 0 && y < 49)) {
+        if((x>-1 && y>-1) && (x < 50 && y < 50)){
+            inbounds = true;
+            return inbounds;
+        }
+        return inbounds;
+    }
+    public boolean inBoundsmiam(){
+        boolean inbounds = false;
+        if((x>0 && x<49)&&(y>0 && y<49)){
             inbounds = true;
             return inbounds;
         }

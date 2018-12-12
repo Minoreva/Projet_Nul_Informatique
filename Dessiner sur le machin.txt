@@ -1,0 +1,7 @@
+mouseDragged
+this.addMouseListener(this); > Clique
+this.addMouseMotionListener(this);
+
+
+MousePressed, mousedragged etc
+
